@@ -1,7 +1,11 @@
 package main
 
-import "fmt"
+import (
+	"github.com/SevenCryber/my-admin/server/core"
+	"github.com/SevenCryber/my-admin/server/global"
+)
 
 func main() {
-	fmt.Println("hello world")
+	//初始化Viper
+	global.YAC_VP = core.Viper()
 }
