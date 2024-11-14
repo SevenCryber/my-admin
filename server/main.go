@@ -14,4 +14,8 @@ func main() {
 	// 初始化zap日志库
 	global.YAC_LOG = core.Zap()
 	zap.ReplaceGlobals(global.YAC_LOG)
+	// gorm连接数据库
+	global.YAC_DB = initialize.Gorm()
+	//初始化定时任务
+	initialize.Timer()
 }

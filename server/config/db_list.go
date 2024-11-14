@@ -1,5 +1,10 @@
 package config
 
+import (
+	"gorm.io/gorm/logger"
+	"strings"
+)
+
 type GeneralDB struct {
 	Prefix       string `mapstructure:"prefix" json:"prefix" yaml:"prefix"`                         // 数据库前缀
 	Port         string `mapstructure:"port" json:"port" yaml:"port"`                               // 数据库端口
@@ -21,4 +26,19 @@ type SpecializedDB struct {
 	AliasName string `mapstructure:"alias-name" json:"alias-name" yaml:"alias-name"`
 	GeneralDB `yaml:",inline" mapstructure:",squash"`
 	Disable   bool `mapstructure:"disable" json:"disable" yaml:"disable"`
+}
+
+func (c GeneralDB) LogLevel() logger.LogLevel {
+	switch strings.ToLower(c.LogMode) {
+	case "silent", "Silent":
+		return logger.Silent
+	case "error", "Error":
+		return logger.Error
+	case "warn", "Warn":
+		return logger.Warn
+	case "info", "Info":
+		return logger.Info
+	default:
+		return logger.Info
+	}
 }
